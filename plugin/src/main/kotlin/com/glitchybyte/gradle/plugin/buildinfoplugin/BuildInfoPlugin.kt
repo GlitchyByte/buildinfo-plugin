@@ -42,7 +42,7 @@ class BuildInfoPlugin: Plugin<Project> {
         // Add Java plugin.
         project.plugins.apply("java")
         // Add task and extension for configuration.
-        val extension = project.extensions.create("saveBuildInfo", BuildInfoPluginExtension::class.java)
+        val extension: BuildInfoPluginExtension = project.extensions.create("saveBuildInfo", BuildInfoPluginExtension::class.java)
         val saveBuildInfoTask  = project.tasks.register("saveBuildInfo", SaveBuildInfoTask::class.java, extension)
         // Set as a dependency of processResources so it's ready with other resources.
         project.tasks.named("processResources") { task ->

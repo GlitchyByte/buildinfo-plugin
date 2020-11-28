@@ -29,7 +29,7 @@ open class BuildInfoPluginExtension {
     /**
      * Output destination directories to save the build info file.
      */
-    var destinations: MutableSet<String> = HashSet()
+    var destinations: Set<String> = HashSet()
 
     /**
      * 32 bit number to xor the code as it's being generated.

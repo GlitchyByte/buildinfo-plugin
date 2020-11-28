@@ -55,7 +55,19 @@ open class SaveBuildInfoTask @Inject constructor(private val extension: BuildInf
 
     private fun saveToDestinations(json: String) {
         if (extension.destinations.isEmpty()) {
-            throw InvalidUserDataException("BuildInfo: No destinations given!")
+            throw InvalidUserDataException("""
+                BuildInfoPlugin: No destinations given!
+                Provide a configuration block. Like this:
+                tasks {
+                    saveBuildInfo {
+                        codeBitXor = 0x11223344   // [Optional] Default is 0xff00ff00
+                        filename = "my-file.json" // [Optional] Default is "build-info.json".
+                        destinations = setOf(     // At least your main resource directory for the app is good.
+                            "src/main/resources/com/glitchybyte/example"
+                        )
+                    }
+                }
+            """.trimIndent())
         }
         val destinationPaths = extension.destinations.map { str -> Paths.get(str, extension.filename) }
         for (path in destinationPaths) {
