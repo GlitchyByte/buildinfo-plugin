@@ -7,9 +7,13 @@ plugins {
     id("org.jetbrains.kotlin.jvm") version "1.4.20"
     `java-gradle-plugin`
     `maven-publish`
+    id("com.google.cloud.artifactregistry.gradle-plugin") version "2.1.1"
 }
 
 repositories {
+    maven {
+        url = uri("artifactregistry://us-west1-maven.pkg.dev/glitchy-maven/repo")
+    }
     mavenCentral()
 }
 
@@ -31,7 +35,11 @@ dependencies {
 }
 
 group = "com.glitchybyte.gradle.plugin"
-version = "1.0.0"
+version = "1.0.3"
+
+tasks.withType<Jar>() {
+    archiveBaseName.set("buildinfo-plugin")
+}
 
 gradlePlugin {
     plugins {
@@ -60,24 +68,36 @@ tasks.named("check") {
     dependsOn(functionalTest)
 }
 
-//publishing {
-//    publications {
-//        create<MavenPublication>("library") {
-//            groupId = project.group as String
-//            artifactId = "glitchybuildplugin"//project.name.toLowerCase(Locale.US)
-//            version = project.version as String
-//            from(components["kotlin"])
-//            pom {
-//                name.set("GlitchyBuild")
-//                description.set("Build utilities.")
-//                url.set("https://github.com/wyvx/glitchybuild")
-//                licenses {
-//                    license {
-//                        name.set("Apache License 2.0")
-//                        url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
-//                    }
-//                }
-//            }
-//        }
-//    }
-//}
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+publishing {
+    repositories {
+        maven {
+            url = uri("artifactregistry://us-west1-maven.pkg.dev/glitchy-maven/repo")
+        }
+    }
+    publications {
+        register<MavenPublication>("library") {
+            groupId = project.group as String
+            artifactId = "buildinfo-plugin"//project.name.toLowerCase(Locale.US)
+            version = project.version as String
+            from(components["kotlin"])
+            artifact(tasks["sourcesJar"])
+            artifact(tasks["javadocJar"])
+            pom {
+                name.set("BuildInfoPlugin")
+                description.set("Generates build information file.")
+                url.set("https://github.com/glitchybyte/buildinfo-plugin")
+                licenses {
+                    license {
+                        name.set("Apache License 2.0")
+                        url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+                    }
+                }
+            }
+        }
+    }
+}
