@@ -1,4 +1,4 @@
-// Copyright 2020 GlitchyByte LLC
+// Copyright 2020 GlitchyByte
 // SPDX-License-Identifier: Apache-2.0
 
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
@@ -35,17 +35,17 @@ dependencies {
 }
 
 group = "com.glitchybyte.gradle.plugin"
-version = "1.0.3"
+version = "1.0.0"
 
-tasks.withType<Jar>() {
-    archiveBaseName.set("buildinfo-plugin")
-}
+//tasks.withType<Jar>() {
+//    archiveBaseName.set("buildinfo-plugin")
+//}
 
 gradlePlugin {
     plugins {
-        create("buildinfoplugin") {
-            id = "com.glitchybyte.gradle.plugin.buildinfoplugin"
-            implementationClass = "com.glitchybyte.gradle.plugin.buildinfoplugin.BuildInfoPlugin"
+        create("buildinfo") {
+            id = "com.glitchybyte.gradle.plugin.buildinfo"
+            implementationClass = "com.glitchybyte.gradle.plugin.buildinfo.BuildInfoPlugin"
         }
     }
 }
@@ -68,10 +68,10 @@ tasks.named("check") {
     dependsOn(functionalTest)
 }
 
-java {
-    withJavadocJar()
-    withSourcesJar()
-}
+//java {
+//    withJavadocJar()
+//    withSourcesJar()
+//}
 
 publishing {
     repositories {
@@ -79,25 +79,25 @@ publishing {
             url = uri("artifactregistry://us-west1-maven.pkg.dev/glitchy-maven/repo")
         }
     }
-    publications {
-        register<MavenPublication>("library") {
-            groupId = project.group as String
-            artifactId = "buildinfo-plugin"//project.name.toLowerCase(Locale.US)
-            version = project.version as String
-            from(components["kotlin"])
-            artifact(tasks["sourcesJar"])
-            artifact(tasks["javadocJar"])
-            pom {
-                name.set("BuildInfoPlugin")
-                description.set("Generates build information file.")
-                url.set("https://github.com/glitchybyte/buildinfo-plugin")
-                licenses {
-                    license {
-                        name.set("Apache License 2.0")
-                        url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
-                    }
-                }
-            }
-        }
-    }
+//    publications {
+//        register<MavenPublication>("library") {
+//            groupId = project.group as String
+//            artifactId = "buildinfo-plugin"//project.name.toLowerCase(Locale.US)
+//            version = project.version as String
+//            from(components["kotlin"])
+//            artifact(tasks["sourcesJar"])
+//            artifact(tasks["javadocJar"])
+//            pom {
+//                name.set("BuildInfoPlugin")
+//                description.set("Generates build information file.")
+//                url.set("https://github.com/glitchybyte/buildinfo-plugin")
+//                licenses {
+//                    license {
+//                        name.set("Apache License 2.0")
+//                        url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+//                    }
+//                }
+//            }
+//        }
+//    }
 }

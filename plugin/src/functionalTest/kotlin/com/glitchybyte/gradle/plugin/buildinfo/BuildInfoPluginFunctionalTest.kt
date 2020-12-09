@@ -1,7 +1,7 @@
 // Copyright 2020 GlitchyByte LLC
 // SPDX-License-Identifier: Apache-2.0
 
-package com.glitchybyte.gradle.plugin.buildinfoplugin
+package com.glitchybyte.gradle.plugin.buildinfo
 
 import org.gradle.testkit.runner.GradleRunner
 import java.io.File
@@ -23,7 +23,7 @@ class BuildInfoPluginFunctionalTest {
         projectDir.resolve("settings.gradle").writeText("rootProject.name = \"MyFunctionalTest\"")
         projectDir.resolve("build.gradle").writeText("""
             plugins {
-                id('com.glitchybyte.gradle.plugin.buildinfoplugin')
+                id('com.glitchybyte.gradle.plugin.buildinfo')
             }
             group = "myGroup"
             version = "5.0.8"

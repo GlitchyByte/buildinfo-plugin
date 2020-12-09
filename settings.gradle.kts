@@ -1,2 +1,2 @@
-rootProject.name = "BuildInfoPlugin"
+rootProject.name = "buildinfo-plugin"
 include("plugin")
