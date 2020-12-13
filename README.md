@@ -53,7 +53,7 @@ build-info file.
 Build will trigger a file `build-info.json` to be generated in the
 given destinations. Contents will be like this:
 
-```json
+```json5
     {
       "group": "com.glitchybyte.example", // Project group.
       "name": "ExampleApp",               // Project name.
