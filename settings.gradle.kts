@@ -1,2 +1,1 @@
-rootProject.name = "buildinfo-plugin"
-include("plugin")
+rootProject.name = "buildinfo"

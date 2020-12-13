@@ -1,24 +1,32 @@
 # BuildInfo Plugin
 
-A plugin to generate a build info json file that can be used for
-version introspection in code, to generate unique identifiers for
-docker images, or anything that requires knowing which version
-of the code is being deployed.
+A Gradle plugin to generate a build info json file that can be
+used for version introspection in code, to generate unique
+identifiers for Docker images, or anything that requires knowing
+which version of the code is being deployed.
 
 ### How do I use it?
+*>>> This is not working at the moment. Will update as soon as
+I get GCP Artifact Repository working. <<<*
 
-Add the plugin:
-
+In `settings.gradle.kts`:
 ```kotlin
-plugins {
-    // ...other plugins...
-    id("com.glitchybyte.gradle.plugin.buildinfoplugin") version "1.0.0"
+pluginManagement {
+    plugins {
+        id("com.google.cloud.artifactregistry.gradle-plugin") version "2.1.1"
+    }
+    repositories {
+        maven(url = uri("artifactregistry://us-west1-maven.pkg.dev/glitchy-maven/repo"))
+    }
 }
 ```
 
-Configure the plugin:
-
+In `build.gradle.kts`:
 ```kotlin
+plugins {
+    id("com.glitchybyte.gradle.plugin.buildinfoplugin") version "1.0.0"
+}
+
 tasks {
     saveBuildInfo {
         // filename = "build-info.json" // Default value.
@@ -62,5 +70,5 @@ No actual words will be formed.
 
 In the example given, the file will be generated in the
 `src/main/resources/com/glitchybyte/example` directory,
-so it can be easily read in a basic application. You can add as
+so it can be easily read in an application. You can add as
 many destination directories as you want.
